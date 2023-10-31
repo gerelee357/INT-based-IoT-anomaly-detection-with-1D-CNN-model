@@ -1,20 +1,22 @@
 # Building SDN testbed with P4 virtual switch and ONOS network controller
 
 **1. Operating system requirement**
+
 	- Ubuntu 18.04: 
 	- Kernel version ( check it by using 'uname -r' command )    4.15.0-166-generic
 
 
-**2. Controller  ONOS-2.4.0** 
+**2. Download ONOS-2.4.0 controller.** 
 
- 	Download following commit published on Jun 4, 2020, because this version supports INT GUI. 
+ 	Download the following commit published on Jun 4, 2020, because this version supports INT GUI. 
 	https://github.com/opennetworkinglab/onos/tree/555617a9f918209cfd6b2c283d6a80638f83c17a
 	
-**3. After downloading ONOS,  extracting it and rename into onos. Then read  README.md  in onos directory.   Install nessarry packages for building SDN network with P4 by using following script.**
+**3. Once ONOS has been downloaded, extract the files and rename the extracted folder to 'onos'. Next, navigate to the 'onos' directory and read the README.md file.  Then, install the necessary packages required for constructing the SDN network with P4 by executing the following script.**
+
 	cd onos/tools/dev/p4vm
 	./install-p4-tools.sh 
 
-5. Before installing ONOS itself, please install bazel.  Add Bazel distribution URL as a package source. 
+**3. Before you proceed with the installation of ONOS, it's necessary to install Bazel, which is required for compiling ONOS. Add the Bazel distribution URL as a package source before installing it.**
 
 	echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 	curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
