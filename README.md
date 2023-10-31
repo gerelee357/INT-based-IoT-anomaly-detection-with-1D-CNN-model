@@ -62,6 +62,7 @@ Our proposed model is stored in the file named model.ipynb within this repositor
 
 ## If you use this repository in your research, please cite:
 
+'''
 @INPROCEEDINGS{10083469,
   author={Altangerel, Gereltsetseg and Tejfel, Máté and Tsogbaatar, Enkhtur},
   booktitle={2022 IEEE 16th International Scientific Conference on Informatics (Informatics)}, 
@@ -71,6 +72,7 @@ Our proposed model is stored in the file named model.ipynb within this repositor
   number={},
   pages={106-113},
   doi={10.1109/Informatics57926.2022.10083469}}
+'''
 
 
 ## License
