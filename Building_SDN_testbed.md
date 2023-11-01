@@ -32,19 +32,16 @@
 	
     
 
-**6.RUN ONOS.**
+**6.Run ONOS.**
 
 	cd onos
 	ONOS_APPS=drivers.bmv2,proxyarp,lldpprovider,hostprovider,fwd 
 	sudo bazel-1.0.0 run onos-local -- clean 
 
-**7. When running above lines, it gives error. To fix it, run following.(it is error because if 4.15.0-166-generic kernel )**
+**7. When running the above lines, it gives an error. To fix it, run following.(it is error because if 4.15.0-166-generic kernel )**
 
-	Q: ~/.ssh/rsa-key gesen folder oldku baisan
-
-	A: ssh-keygen -t rsa commandiig ajilluulaad deerh directoriig bichne
-
-	neg password shig yum asuuhaar ni password geed bichchihsen 
+	ssh-keygen -t rsa 
+ 	~/.ssh/rsa-key gesen 
 
 
 **8. Install Mininet 2.3.0.**
@@ -85,7 +82,7 @@ Look for this line:
 Below this line, add the following:
 	collectorIntf = Intf( 'veth_1', node=net.nameToNode[ "s12" ] )
 
-**12. Install grafana using the following instructions.**
+**12. Install Grafana using the following instructions.**
 
 https://grafana.com/grafana/download/5.4.2?platform=linux
 
@@ -95,7 +92,7 @@ Settings-> data source
 
 influxdb  http://localhost:8086  INTdatabase
 
-**14. After setting up INTdatabase in Grafana, run Grafana and you can see INT data graphics.**
+**14. Once you've configured the INT database in Grafana, launch Grafana, and you'll be able to visualize the graphics representing the INT data.**
 
 
 
