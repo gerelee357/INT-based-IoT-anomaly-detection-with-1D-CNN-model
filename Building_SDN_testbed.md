@@ -81,9 +81,11 @@ Change the line as follows:
  
 
 Look for this line: 
+
 	net.build()
 
 Below this line, add the following:
+
 	collectorIntf = Intf( 'veth_1', node=net.nameToNode[ "s12" ] )
 
 **12. Install Grafana using the following instructions.**
