@@ -52,7 +52,7 @@ an extended article for publication in Acta Electrotechnica et Informatica, prov
 
 When creating a virtual SDN network testbed incorporating INT (In-band Network Telemetry), we initially referred to the guidelines provided at the following link: https://wiki.onosproject.org/display/ONOS/In-band+Network+Telemetry+%28INT%29+with+ONOS+and+P4
 
-However, due to the deprecation of this guideline and unavailability of certain package versions online, we opted to create our own guideline based on the information provided in the deprecated guideline. You can find our customized guideline in the repository under the file named Building_SDN_testbed.md.
+However, due to the deprecation of this guideline and the unavailability of certain package versions online, we opted to create our own guideline based on the information provided in the deprecated guideline. You can find our customized guideline in the repository under the file named Building_SDN_testbed.md.
 
 
 
@@ -62,7 +62,7 @@ Our proposed model is stored in the file named model.ipynb within this repositor
 
 ## If you use this repository in your research, please cite:
 
-'''
+
 @INPROCEEDINGS{10083469,
 
   author={Altangerel, Gereltsetseg and Tejfel, Máté and Tsogbaatar, Enkhtur},
@@ -80,7 +80,7 @@ Our proposed model is stored in the file named model.ipynb within this repositor
   pages={106-113},
   
   doi={10.1109/Informatics57926.2022.10083469}}
-'''
+
 
 
 ## License
