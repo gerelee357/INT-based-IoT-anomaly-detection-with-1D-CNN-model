@@ -5,7 +5,7 @@
         sudo ip link set dev veth_2 up
 
 
->>2. Run ONOS>>
+**2. Run ONOS**
 
 	cd onos
 
