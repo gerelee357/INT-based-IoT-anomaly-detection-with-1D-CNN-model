@@ -72,9 +72,13 @@
 
 
 Look for this line: 
+
 	from mininet.link import TCLink
+ 
 Change the line as follows:
+
 	from mininet.link import TCLink, Intf
+ 
 
 Look for this line: 
 	net.build()
@@ -90,7 +94,11 @@ https://grafana.com/grafana/download/5.4.2?platform=linux
 
 Settings-> data source 
 
-influxdb  http://localhost:8086  INTdatabase
+influxdb 
+
+http://localhost:8086  
+
+INTdatabase
 
 **14. Once you've configured the INT database in Grafana, launch Grafana, and you'll be able to visualize the graphics representing the INT data.**
 
