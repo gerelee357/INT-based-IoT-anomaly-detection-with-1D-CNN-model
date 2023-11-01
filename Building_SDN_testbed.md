@@ -93,9 +93,7 @@ https://grafana.com/grafana/download/5.4.2?platform=linux
 
 Settings-> data source 
 
-influxdb 
-http://localhost:8086
-INTdatabase
+influxdb  http://localhost:8086  INTdatabase
 
 **14. After setting up INTdatabase in Grafana, run Grafana and you can see INT data graphics.**
 
