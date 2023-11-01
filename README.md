@@ -64,27 +64,27 @@ Our proposed model is stored in the file named model.ipynb within this repositor
 
 '''
 @INPROCEEDINGS{10083469,
+
   author={Altangerel, Gereltsetseg and Tejfel, Máté and Tsogbaatar, Enkhtur},
+  
   booktitle={2022 IEEE 16th International Scientific Conference on Informatics (Informatics)}, 
+  
   title={A 1D CNN-based model for IoT anomaly detection using INT data}, 
+  
   year={2022},
+  
   volume={},
+  
   number={},
+  
   pages={106-113},
+  
   doi={10.1109/Informatics57926.2022.10083469}}
 '''
 
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-
-Upload following to github 
-
-1. dataset
-2. md files
-3. proposed model 
 
 
 
