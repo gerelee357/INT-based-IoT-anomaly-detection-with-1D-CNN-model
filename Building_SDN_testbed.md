@@ -65,16 +65,13 @@
 - Install_BCC_and_INT_collector.md
 
 
-10. Add virtual interfaces for INT collector.
+**10. Add virtual interfaces for the INT collector.**
 
 	sudo ip link add veth_1 type veth peer name veth_2 
 	sudo ip link set dev veth_1 up 
 	sudo ip link set dev veth_2 up 
 
-11. Connect INT Collector with virtual interface. 
-
-
-Modify the file $ONOS_ROOT/tools/test/topos/bmv2-demo.py
+**11. Connect INT Collector with the virtual interface by modifying the file $ONOS_ROOT/tools/test/topos/bmv2-demo.py.**
 
 
 Look for this line: 
@@ -85,14 +82,14 @@ Change the line as follows:
 Look for this line: 
 	net.build()
 
-Below this line, add the followings:
+Below this line, add the following:
 	collectorIntf = Intf( 'veth_1', node=net.nameToNode[ "s12" ] )
 
-12. INstall grafana. Use following instructions. 
+**12. Install grafana using the following instructions.**
 
 https://grafana.com/grafana/download/5.4.2?platform=linux
 
-12. Grafana configuration 
+**13. Grafana configuration.** 
 
 Settings-> data source 
 
@@ -100,12 +97,8 @@ influxdb
 http://localhost:8086
 INTdatabase
 
-13. Run 
+**14. After setting up INTdatabase in Grafana, run Grafana and you can see INT data graphics.**
 
-Username passiig tsaana baisnaar ni avsan
-
-
-Ingeed db-aa grafana-taigaa holbood ajilluulchihna
 
 
 
