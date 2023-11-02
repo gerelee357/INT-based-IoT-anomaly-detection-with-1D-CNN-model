@@ -4,6 +4,9 @@
         sudo ip link set dev veth_1 up 
         sudo ip link set dev veth_2 up
 
+ **Note:** you can check virtual interfaces by using ifconfig command. 
+
+
 
 **2. Run ONOS**
 
