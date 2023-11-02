@@ -4,6 +4,7 @@
 
 	- Ubuntu 18.04: 
 	- Kernel version ( check it by using 'uname -r' command )    4.15.0-166-generic
+ 	- Create a user named p4 and set the password to p4 during Ubuntu installation. 
 
 
 **2. Download ONOS-2.4.0 controller.** 
