@@ -41,14 +41,15 @@
 	app activate org.onosproject.lldpprovider
 	app activate org.onosproject.hostprovider
 
-**4. Setup ONOS ENV variables**
+**5. Setup ONOS ENV variables**
 
 	export ONOS_ROOT=/home/gerel/onos
 	export RUN_PACK_PATH=~/onos/tools/package/runtime/bin
 
 
-**5. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
-	gerel@pc:~/onos$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
+**6. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
+
+	$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
 	
   	To initiate a fresh run, clear all existing data and configurations by executing the following command.
   
