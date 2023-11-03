@@ -58,7 +58,7 @@
 		sudo mn -c
 
 
-**7.Launch the database and INT collector**
+**7. Launch the database and INT collector**
 
 	- Start influxdb database process 
  
@@ -73,7 +73,7 @@
 	simple_switch_CLI --thrift-port `cat /tmp/bmv2-s12-thrift-port`
 	mirroring_add 500 4
 
-  	**Note.** 4 can be different. You can check it by using ports command in mininet. 
+  	**Note.** 4 can be different. You can check it by using the ports command in Mininet. 
 		
 
 **9. Manage INT services on ONOS GUI**
@@ -84,7 +84,7 @@
  	-  Enable INT services  
  		Navigate applications, search inband, and activate it.
   
-	- Then configure the INT report collector
+	- Then, navigate to In-band Telemetry control, and configure the INT report collector
 		address: 127.0.0.1 
 		port: 54321
 
@@ -92,7 +92,7 @@
  		For example, 
 
 		Src address: 10.0.0.1
-		Dst address: 10.0.0.2
+		Dst address: 10.0.0.5
 		Src port: 
 		Dst port: 5001 
 		Protocol: UDP
