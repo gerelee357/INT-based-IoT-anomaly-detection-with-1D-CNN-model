@@ -4,57 +4,72 @@
         sudo ip link set dev veth_1 up 
         sudo ip link set dev veth_2 up
 
- **Note:** you can check virtual interfaces by using ifconfig command. 
+ **Note:** You can check virtual interfaces by using ifconfig command. 
 
 
 
-**2. Run ONOS**
+**2. Run ONOS controller**
 
 	cd onos
 
 	ONOS_APPS=drivers.bmv2,proxyarp,lldpprovider,hostprovider,fwd 
 	sudo bazel-1.0.0 run onos-local -- clean 
 
+**Note:** You can manage ONOS controller via GUI or CLI. 
 
-**3. Activate apps from CLI or GUI**
-	http://localhost:8181/onos/ui/login.html
-	username: karaf
-	password: karaf
+**3. Login  to ONOS GUI:**
+ 
+ 		http://localhost:8181/onos/ui/login.html
+			username: karaf
+			password: karaf
+   
+**4. Activate the following apps from ONOS GUI**
 
-	onos> app activate org.onosproject.fwd 
+ 	- Go to the applications menu and activate the following one by one. 
+
+	org.onosproject.fwd 
+	org.onosproject.drivers.bmv2
+	org.onosproject.proxyarp
+	org.onosproject.lldpprovider
+	org.onosproject.hostprovider
+
+ 	- Or You can activate the using ONOS CLI 
+  
+ 	app activate org.onosproject.fwd 
 	app activate org.onosproject.drivers.bmv2
 	app activate org.onosproject.proxyarp
 	app activate org.onosproject.lldpprovider
 	app activate org.onosproject.hostprovider
 
-**4. Setup ENV variables**
+**4. Setup ONOS ENV variables**
+
 	export ONOS_ROOT=/home/gerel/onos
 	export RUN_PACK_PATH=~/onos/tools/package/runtime/bin
 
- 
- 
 
-**5. RUN network in MININET** 
+**5. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
 	gerel@pc:~/onos$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
 	
-  to create a new run, clean everything using the following command. 
+  	To initiate a fresh run, clear all existing data and configurations by executing the following command.
   
-	sudo mn -c
+		sudo mn -c
 
 
-**6.Launch the collector**
+**6.Launch the INT collector**
 
-	$ sudo systemctl start influxdb
-	$ sudo python3 BPFCollector/InDBClient.py veth_2
+	- Start influxdb database process 
+ 
+		$ sudo systemctl start influxdb
+  
+  	- Start BPF collector
+		$ sudo python3 BPFCollector/InDBClient.py veth_2
 
-gerel@an-INT:~$ sudo python3 BPFCollector/InDBClient.py veth_2
-/usr/lib/python3/dist-packages/requests/__init__.py:80: RequestsDependencyWarning: urllib3 (1.26.9) or chardet (3.0.4) doesn't match a supported version!
-  RequestsDependencyWarning)
 
-
-**7. Configure mirror port**
+**7. Configure mirror port on s12 for sending INT data to INT collector**
 	simple_switch_CLI --thrift-port `cat /tmp/bmv2-s12-thrift-port`
 	mirroring_add 500 4
+
+  	Note. 4 can be different. You can check it 
 		4 gedeg port veth_1 gedeg interface-tei holbogson esehiig mininet-ees ports gesen command-r harna
 
 **8. ENABLE INT services**
