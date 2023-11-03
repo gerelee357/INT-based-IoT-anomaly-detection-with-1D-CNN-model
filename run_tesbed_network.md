@@ -49,6 +49,8 @@
 
 **6. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
 
+
+
 	$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
 	
   	To initiate a fresh run, clear all existing data and configurations by executing the following command.
@@ -56,7 +58,7 @@
 		sudo mn -c
 
 
-**6.Launch the INT collector**
+**7.Launch the database and INT collector**
 
 	- Start influxdb database process 
  
@@ -66,33 +68,41 @@
 		$ sudo python3 BPFCollector/InDBClient.py veth_2
 
 
-**7. Configure mirror port on s12 for sending INT data to INT collector**
+**8. Configure mirror port on s12 for sending INT data to INT collector**
+
 	simple_switch_CLI --thrift-port `cat /tmp/bmv2-s12-thrift-port`
 	mirroring_add 500 4
 
-  	Note. 4 can be different. You can check it 
-		4 gedeg port veth_1 gedeg interface-tei holbogson esehiig mininet-ees ports gesen command-r harna
-
-**8. ENABLE INT services**
-	enable INT
-	https://www.youtube.com/watch?v=ZXRef0IhXGM
-	configure INT report collector
-		address: 127.0.0.1 
-		port: 54321
+  	**Note.** 4 can be different. You can check it by using ports command in mininet. 
 		
 
-**9. Add INT Intent on ONOS GUI**
+**9. Manage INT services on ONOS GUI**
 
-	Src address: 10.0.0.1
-	Dst address: 10.0.0.2
-	Src port: 
-	Dst port: 5001 
-	Protocol: UDP
+	You can check the following link as a reference for this. 
+	https://www.youtube.com/watch?v=ZXRef0IhXGM
+ 
+ 	-  Enable INT services  
+ 		Navigate applications, search inband, and activate it.
+  
+	- Then configure the INT report collector
+		address: 127.0.0.1 
+		port: 54321
 
-**10. Generate sample flow to monitor.**
+	- Then, you can configure INT intent. What traffic do you want to capture? 
+ 		For example, 
 
-	send udp or tcp flow between hosts
+		Src address: 10.0.0.1
+		Dst address: 10.0.0.2
+		Src port: 
+		Dst port: 5001 
+		Protocol: UDP
+
+**10. Generate sample flow to monitor on mininet.**
+
+	for example, sending UDP or TCP flow between hosts.
+ 
 	h1 iperf -c h5 -u -t 100000 -l 2000B
+ 
 		-t 100000
 		-l 250B
 
