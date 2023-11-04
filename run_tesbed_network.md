@@ -100,7 +100,10 @@
 **10. Generate sample flow to monitor on mininet.**
 
 	for example, sending UDP or TCP flow between hosts.
- 
+ 	
+ 	iperf -s -u -i 1 
+
+  
 	h1 iperf -c h5 -u -t 100000 -l 2000B
  
 		-t 100000
