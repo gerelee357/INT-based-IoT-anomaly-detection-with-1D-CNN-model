@@ -1,18 +1,87 @@
 
-1. INT collector-iig ajilluulahaas omno. BCC gesen kernel module-iig zaaval ajilluulah yostoi. 
+Certainly! Here are the GitHub instructions for installing the BCC kernel module, setting up the INT collector, and running the In-band Network Telemetry (INT) setup using ONOS and P4:
+
+---
+
+## Setting Up INT collector
+
+### 1. Install BCC Kernel Module
+
+#### 1.1. Install Prerequisite Packages (Ubuntu Bionic 18.04 LTS)
+```bash
+sudo apt-get -y install bison build-essential cmake flex git libedit-dev \
+  	libllvm6.0 llvm-6.0-dev libclang-6.0-dev python zlib1g-dev libelf-dev libfl-dev python3-distutils
+```
+
+#### 1.2. Clone and Compile BCC
+```bash
+git clone https://github.com/iovisor/bcc.git
+cd bcc/build
+cmake ..
+make
+sudo make install
+cmake -DPYTHON_CMD=python3 ..
+pushd src/python/
+make
+sudo make install
+popd
+```
+
+### 2. Install and Run INT Collector
+
+#### 2.1. Clone INT Collector Repository
+```bash
+git clone https://gitlab.com/tunv_ebpf/BPFCollector.git
+cd BPFCollector
+git checkout -t origin/spec_1.0
+```
+
+#### 2.2. Enable JIT for eBPF
+```bash
+sudo sysctl net/core/bpf_jit_enable=1
+```
+
+#### 2.3. Install Required Python Modules
+```bash
+sudo pip3 install prometheus_client
+sudo pip3 install influxdb
+sudo pip3 install cython
+```
+
+#### 2.4. Install InfluxDB
+```bash
+wget https://dl.influxdata.com/influxdb/releases/influxdb_1.2.4_amd64.deb
+sudo dpkg -i influxdb_1.2.4_amd64.deb
+```
+
+#### 2.5. Run INT Collector
+```bash
+sudo systemctl start influxdb
+sudo python3 BPFCollector/InDBClient.py veth_2
+```
+
+---
+
+Make sure to adapt the instructions according to your specific environment. Users can follow these steps to set up the In-band Network Telemetry (INT) environment using ONOS, P4, and BCC.
+
+
+1. Before INT collector, you should install BCC kernel module. 
 
 2. Install bcc
 
-Download bcc kernel module: 
-	bcc-g source code-oos suulgah zaavar: Compiler for BPD	
-	https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source
-	Deerh commit oorchlogdsonoos bolood suulgaj bolohgui baisan. 
-	Harin ooriin com dotor huuchin huvilbariig tataj avsan(Package folder-t baigaa) Tuuniig suulgaval asuudalgui ajillna. 
+
 
 Install prerequiste packages on Ubuntu 18.04 LTS
 	# For Bionic (18.04 LTS)
 	sudo apt-get -y install bison build-essential cmake flex git libedit-dev \
   	libllvm6.0 llvm-6.0-dev libclang-6.0-dev python zlib1g-dev libelf-dev libfl-dev python3-distutils
+
+Download bcc kernel module: 
+	bcc-g source code-oos suulgah zaavar: Compiler for BPD	
+	https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source
+ 
+	Deerh commit oorchlogdsonoos bolood suulgaj bolohgui baisan. 
+	Harin ooriin com dotor huuchin huvilbariig tataj avsan(Package folder-t baigaa) Tuuniig suulgaval asuudalgui ajillna. 
 
 Install and compile BCC
 
