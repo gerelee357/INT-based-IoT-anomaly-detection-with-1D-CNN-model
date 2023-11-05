@@ -6,8 +6,6 @@
 
  **Note:** You can check virtual interfaces by using ifconfig command. 
 
-
-
 **2. Run ONOS controller**
 
 	cd onos
@@ -27,19 +25,19 @@
 
  	- Go to the applications menu and activate the following one by one. 
 
-	org.onosproject.fwd 
-	org.onosproject.drivers.bmv2
-	org.onosproject.proxyarp
-	org.onosproject.lldpprovider
-	org.onosproject.hostprovider
+		org.onosproject.fwd 
+		org.onosproject.drivers.bmv2
+		org.onosproject.proxyarp
+		org.onosproject.lldpprovider
+		org.onosproject.hostprovider
 
  	- Or You can activate the using ONOS CLI 
   
- 	app activate org.onosproject.fwd 
-	app activate org.onosproject.drivers.bmv2
-	app activate org.onosproject.proxyarp
-	app activate org.onosproject.lldpprovider
-	app activate org.onosproject.hostprovider
+ 		app activate org.onosproject.fwd 
+		app activate org.onosproject.drivers.bmv2
+		app activate org.onosproject.proxyarp
+		app activate org.onosproject.lldpprovider
+		app activate org.onosproject.hostprovider
 
 **5. Setup ONOS ENV variables**
 
@@ -49,18 +47,15 @@
 
 **6. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
 
-
-
 	$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
 	
-  	To initiate a fresh run, clear all existing data and configurations by executing the following command.
-  
-		sudo mn -c
+  	**Note:**  To initiate a fresh run, clear all existing data and configurations by executing the following command.
+			sudo mn -c
 
 
 **7. Launch the database and INT collector**
 
-	- Start influxdb database process 
+	- Start influx database process 
  
 		$ sudo systemctl start influxdb
   
@@ -114,8 +109,54 @@
 		initiates UDP traffic from h1 to h7 with a duration of 100,000 seconds (-t 100000) and a packet size of 2000 bytes (-l 2000).
 
 
-**11.Start grafana**
-
-        
+**11. Start grafana**
+      
 	sudo systemctl start grafana-server
 	sudo systemctl status grafana-server
+ 
+ **12.To connect an InfluxDB (INTdatabase) to Grafana and add queries to fetch data, follow these steps:** 
+ 
+ 	
+	1. Login to Grafana:
+		Open your web browser and go to http://localhost:3000
+		Log in to Grafana using your credentials.
+	2. Add InfluxDB Data Source:
+		Click on the gear icon (⚙️) in the left sidebar to open the "Configuration" menu.
+		Select "Data Sources."
+		Click on the "Add your first data source" or the "+ Add" button.
+
+    Configure InfluxDB Data Source:
+    
+		Choose "InfluxDB" from the list of available data sources.
+		In the "HTTP" section:
+			URL: Enter the URL of your InfluxDB instance (e.g., http://localhost:8086).
+			Access: Choose "Server" to have Grafana access InfluxDB directly.
+		In the "InfluxDB Details" section:
+			Database: Enter the name of your InfluxDB database.
+			User: Enter your InfluxDB username.
+			Password: Enter your InfluxDB password.
+		Click "Save & Test" to verify the connection to the InfluxDB database.
+
+ 	 3. Add Queries to Get Data from INT Database:
+		Create a new dashboard or open an existing one.
+		Click on the "+" icon in the upper-left corner to add a new panel.
+		In the panel settings, click on the "Query" section.
+		Example Query:
+			Select the appropriate measurement and field from your INT database.
+
+		Use the query editor to construct your query. For example:
+  			SELECT field_name FROM flow_hop_latency,10.0.0.1:39513->10.0.0.7:5001,proto=17,sw_id=11 WHERE time > now() - 1h
+
+     		This query selects data from the last 1 hour. Adjust the time range and query according to your specific use case.
+
+		Click on "Apply" to apply the query.
+
+		You can further customize visualization options, such as choosing a graph type, legend format, and more.
+
+	4. Save and View Dashboard:
+	Once you have configured your queries and visualizations, click on the disk icon (💾) to save the dashboard.
+	Give your dashboard a name and click "Save."
+	Now, your Grafana dashboard is connected to the INT database, and it displays data based on your queries. Make sure to tailor the queries and visualizations to your specific data and 	requirements.
+     
+
+ 
