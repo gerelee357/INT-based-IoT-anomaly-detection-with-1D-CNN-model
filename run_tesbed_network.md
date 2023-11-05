@@ -1,11 +1,9 @@
-Certainly! Below are the GitHub instructions for the provided setup. You can create a README.md file in your GitHub repository and paste the instructions there. Users can follow these steps to set up the environment and monitor traffic using Grafana and InfluxDB.
 
----
 
 ## Setting Up SDN Environment with INT Monitoring using ONOS, Mininet, InfluxDB, and Grafana
 
 ### Prerequisites
-- Install Mininet, ONOS, Bazel, Simple_switch (part of BMv2), InfluxDB, Grafana, and Python 3.
+- Install Mininet, ONOS, Bazel, P4 packages, BPF colector and others by using Building_SDN_testbed.md and Install_BCC_and_INT_collector.md
 
 ### Instructions
 
@@ -51,25 +49,31 @@ Certainly! Below are the GitHub instructions for the provided setup. You can cre
 
    ```bash
    sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
-   sudo mn -c
-   ```
+      ```
+   **Note:**  To initiate a fresh run, clear all existing data and configurations by executing the following command.
 
-7. **Launch the Database and INT Collector**
+   ```bash
+   sudo mn -c
+    ```
+
+8. **Launch the Database and INT Collector**
 
    Start InfluxDB and BPF collector:
    ```bash
    sudo systemctl start influxdb
    sudo python3 BPFCollector/InDBClient.py veth_2
    ```
+   
 
-8. **Configure Mirror Port on s12 for INT Data**
+9. **Configure Mirror Port on s12 for INT Data**
 
    ```bash
    simple_switch_CLI --thrift-port `cat /tmp/bmv2-s12-thrift-port`
    mirroring_add 500 4
    ```
+   **Note.** 4 can be different. You can check it by using the ports command in Mininet. 
 
-9. **Manage INT Services on ONOS GUI**
+10. **Manage INT Services on ONOS GUI**
 
    - Enable INT services via ONOS GUI:
      - Applications > Search for 'inband' > Activate it.
@@ -77,8 +81,20 @@ Certainly! Below are the GitHub instructions for the provided setup. You can cre
        - Address: 127.0.0.1
        - Port: 54321
      - Configure INT intent based on traffic parameters (e.g., source address, destination address, ports, protocol).
+    
+       For example, 
 
-10. **Generate Sample Flow to Monitor on Mininet**
+		Src address: 10.0.0.1
+		Dst address: 10.0.0.5
+		Src port: 
+		Dst port: 5001 
+		Protocol: UDP
+  
+  	**Note:** If you can not see INT data in the influx database, reconfigure INT intent. 
+
+   	You can also check the following link as a reference for this: https://www.youtube.com/watch?v=ZXRef0IhXGM
+
+11. **Generate Sample Flow to Monitor on Mininet**
 
     - Start UDP server on host h7:
       ```bash
@@ -90,14 +106,16 @@ Certainly! Below are the GitHub instructions for the provided setup. You can cre
       h1 iperf -c h7 -u -t 100000 -l 2000B
       ```
 
-11. **Start Grafana**
+      UDP traffic from h1 to h7 with a duration of 100,000 seconds (-t 100000) and a packet size of 2000 bytes (-l 2000).
+
+12. **Start Grafana**
 
     ```bash
     sudo systemctl start grafana-server
     sudo systemctl status grafana-server
     ```
 
-12. **Connect InfluxDB (INT Database) to Grafana**
+13. **Connect InfluxDB (INT Database) to Grafana**
 
     - Login to Grafana: [http://localhost:3000](http://localhost:3000)
     - Add InfluxDB Data Source:
@@ -106,131 +124,8 @@ Certainly! Below are the GitHub instructions for the provided setup. You can cre
       - Click "Save & Test"
     - Add Queries to visualize INT data based on your requirements.
 
----
 
-Make sure to adapt the instructions according to your specific file paths and configurations. Users can follow these steps to replicate the setup and monitor network traffic using Grafana and InfluxDB.
-
-
-
-
-
-
-**1. Add virtual interfaces for the collector.**
-
-	sudo ip link add veth_1 type veth peer name veth_2
-        sudo ip link set dev veth_1 up 
-        sudo ip link set dev veth_2 up
-
- **Note:** You can check virtual interfaces by using ifconfig command. 
-
-**2. Run ONOS controller**
-
-	cd onos
-
-	ONOS_APPS=drivers.bmv2,proxyarp,lldpprovider,hostprovider,fwd 
-	sudo bazel-1.0.0 run onos-local -- clean 
-
-**Note:** You can manage ONOS controller via GUI or CLI. 
-
-**3. Login  to ONOS GUI:**
- 
- 		http://localhost:8181/onos/ui/login.html
-			username: karaf
-			password: karaf
-   
-**4. Activate the following apps from ONOS GUI**
-
- 	- Go to the applications menu and activate the following one by one. 
-
-		org.onosproject.fwd 
-		org.onosproject.drivers.bmv2
-		org.onosproject.proxyarp
-		org.onosproject.lldpprovider
-		org.onosproject.hostprovider
-
- 	- Or You can activate the using ONOS CLI 
-  
- 		app activate org.onosproject.fwd 
-		app activate org.onosproject.drivers.bmv2
-		app activate org.onosproject.proxyarp
-		app activate org.onosproject.lldpprovider
-		app activate org.onosproject.hostprovider
-
-**5. Setup ONOS ENV variables**
-
-	export ONOS_ROOT=/home/gerel/onos
-	export RUN_PACK_PATH=~/onos/tools/package/runtime/bin
-
-
-**6. Run SDN network with ONOS controller and P4 switches(BMv2) in MININET.** 
-
-	$ sudo -E $ONOS_ROOT/tools/test/topos/bmv2-demo.py --onos-ip=127.0.0.1 --pipeconf-id=org.onosproject.pipelines.int
-	
-  	**Note:**  To initiate a fresh run, clear all existing data and configurations by executing the following command.
-			sudo mn -c
-
-
-**7. Launch the database and INT collector**
-
-	- Start influx database process 
- 
-		$ sudo systemctl start influxdb
-  
-  	- Start BPF collector
-		$ sudo python3 BPFCollector/InDBClient.py veth_2
-
-
-**8. Configure mirror port on s12 for sending INT data to INT collector**
-
-	simple_switch_CLI --thrift-port `cat /tmp/bmv2-s12-thrift-port`
-	mirroring_add 500 4
-
-  	**Note.** 4 can be different. You can check it by using the ports command in Mininet. 
-		
-
-**9. Manage INT services on ONOS GUI**
-
-	You can check the following link as a reference for this. 
-	https://www.youtube.com/watch?v=ZXRef0IhXGM
- 
- 	-  Enable INT services  
- 		Navigate applications, search inband, and activate it.
-  
-	- Then, navigate to In-band Telemetry control, and configure the INT report collector
-		address: 127.0.0.1 
-		port: 54321
-
-	- Then, you can configure INT intent. What traffic do you want to capture? 
- 		For example, 
-
-		Src address: 10.0.0.1
-		Dst address: 10.0.0.5
-		Src port: 
-		Dst port: 5001 
-		Protocol: UDP
-  
-  	**Note:** If you can not see INT data in the influx database, reconfigure INT intent. 
-
-**10. Generate sample flow to monitor on Mininet.**
-
-	For example, you send UDP or TCP flow between h1 and h7 hosts.
-
- 	1. Start UDP server on host h7:
-  
- 		iperf -s -u -i 1 
-   
-	2. Initiate UDP traffic from h1 to h7:
-  
-		h1 iperf -c h7 -u -t 100000 -l 2000B
- 
-		initiates UDP traffic from h1 to h7 with a duration of 100,000 seconds (-t 100000) and a packet size of 2000 bytes (-l 2000).
-
-
-**11. Start grafana**
-      
-	sudo systemctl start grafana-server
-	sudo systemctl status grafana-server
- 
+<!-- 
  **12.To connect an InfluxDB (INTdatabase) to Grafana and add queries to fetch data, follow these steps:** 
  
  	
@@ -275,5 +170,5 @@ Make sure to adapt the instructions according to your specific file paths and co
 	Give your dashboard a name and click "Save."
 	Now, your Grafana dashboard is connected to the INT database, and it displays data based on your queries. Make sure to tailor the queries and visualizations to your specific data and 	requirements.
      
-
+-->
  
