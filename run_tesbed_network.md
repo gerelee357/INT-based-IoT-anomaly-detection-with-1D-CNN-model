@@ -96,18 +96,22 @@
 		Src port: 
 		Dst port: 5001 
 		Protocol: UDP
-
-**10. Generate sample flow to monitor on mininet.**
-
-	for example, sending UDP or TCP flow between hosts.
- 	
- 	iperf -s -u -i 1 
-
   
-	h1 iperf -c h5 -u -t 100000 -l 2000B
+  	**Note:** If you can not see INT data in the influx database, reconfigure INT intent. 
+
+**10. Generate sample flow to monitor on Mininet.**
+
+	For example, you send UDP or TCP flow between h1 and h7 hosts.
+
+ 	1. Start UDP server on host h7:
+  
+ 		iperf -s -u -i 1 
+   
+	2. Initiate UDP traffic from h1 to h7:
+  
+		h1 iperf -c h7 -u -t 100000 -l 2000B
  
-		-t 100000
-		-l 250B
+		initiates UDP traffic from h1 to h7 with a duration of 100,000 seconds (-t 100000) and a packet size of 2000 bytes (-l 2000).
 
 
 **11.Start grafana**
