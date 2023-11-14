@@ -1,1 +1,2 @@
-
+0 - normal
+1 - malicious
